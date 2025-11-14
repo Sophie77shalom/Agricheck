@@ -8,7 +8,7 @@ import io
 # Load environment variables
 load_dotenv()
 
-# Configure the page first
+# Configure the page
 st.set_page_config(
     page_title="Agricheck - Plant Disease Detector",
     page_icon="🌿",
@@ -27,14 +27,14 @@ if not api_key:
 
 try:
     genai.configure(api_key=api_key)
-    # Use the correct model from your available list
+    # Use the correct model from the available list
     model = genai.GenerativeModel('models/gemini-2.0-flash')
     st.success(" Using model: Gemini 2.0 Flash - Perfect for image analysis!")
 except Exception as e:
     st.error(f" Failed to configure Gemini: {str(e)}")
     st.stop()
 
-# Our MAGIC PROMPT - Enhanced for better results
+# MAGIC PROMPT - Enhanced for better results
 PLANT_EXPERT_PROMPT = """
 You are AgriBot, an expert agronomist specializing in organic farming in Kenya. 
 
@@ -129,10 +129,22 @@ if uploaded_file is not None:
         
         st.header(" Analysis Results")
         
-        # Display results in a nice box
+        # Display results  
         st.success("Analysis Complete!")
         st.write(result)
         
         st.info(" **Remember**: This is AI-assisted advice. For serious crop issues, consult local agricultural experts.")
 else:
     st.info(" Please upload an image of a plant leaf to get started")
+
+# Footer
+st.divider()
+st.markdown("---")
+st.markdown(
+    "<div style='text-align: center; color: #666;'>"
+    "🌿 Built with ❤️ for Kenyan Farmers | "
+    "StrathSpace Hack Day 2025 | "
+    "Powered by Google Gemini AI"
+    "</div>", 
+    unsafe_allow_html=True
+)
